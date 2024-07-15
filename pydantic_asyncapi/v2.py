@@ -1,4 +1,6 @@
-from typing import Annotated, Any, Literal, Optional, Union
+from __future__ import annotations
+
+from typing import Annotated, Any, Literal, Union
 
 import annotated_types
 from pydantic import AnyUrl, Field
@@ -22,12 +24,12 @@ from .common import (
 
 
 class MessageTrait(BaseMessageTrait):
-    messageId: Optional[str] = None
+    messageId: str | None = None
 
 
 class Message(MessageTrait):
     payload: Any
-    traits: Optional[list[Union[MessageTrait, Reference]]] = None
+    traits: list[MessageTrait | Reference] | None = None
 
 
 MessageOrRef = Annotated[list[Union[Message, Reference]], annotated_types.Len(1, None)]
@@ -38,44 +40,44 @@ class OneOf(BaseModel):
 
 
 class OperationTrait(ExtendableBaseModel):
-    operationId: Optional[str] = None
-    summary: Optional[str] = None
-    description: Optional[str] = None
-    security: Optional[list[SecurityScheme]] = None
-    tags: Optional[list[Tag]] = None
-    externalDocs: Union[ExternalDocumentation, Reference, None] = None
+    operationId: str | None = None
+    summary: str | None = None
+    description: str | None = None
+    security: list[SecurityScheme] | None = None
+    tags: list[Tag] | None = None
+    externalDocs: ExternalDocumentation | Reference | None = None
     bindings: TypeRefMap[Bindings]
 
 
 class Operation(OperationTrait):
-    traits: Optional[list[Union[OperationTrait, Reference]]] = None
-    message: Union[Message, Reference, OneOf]
+    traits: list[OperationTrait | Reference] | None = None
+    message: Message | Reference | OneOf
 
 
 class Parameter(BaseModel):
-    description: Optional[str] = None
-    schema_: Optional[Union[Schema, Reference]] = Field(None, alias="schema")
-    location: Optional[str] = None
+    description: str | None = None
+    schema_: Schema | Reference | None = Field(None, alias="schema")
+    location: str | None = None
 
 
 class ChannelItem(ExtendableBaseModel):
-    ref: Optional[str] = Field(None, alias="$ref")
-    description: Optional[str] = None
-    servers: Optional[list[str]] = None
-    publish: Optional[Operation] = None
-    subscribe: Optional[Operation] = None
+    ref: str | None = Field(None, alias="$ref")
+    description: str | None = None
+    servers: list[str] | None = None
+    publish: Operation | None = None
+    subscribe: Operation | None = None
     parameters: TypeRefMap[Parameter]
-    bindings: Optional[Bindings] = None
+    bindings: Bindings | None = None
 
 
 class Server(ExtendableBaseModel):
     url: AnyUrl
     protocol: str
-    protocolVersion: Optional[str] = None
-    description: Optional[str] = None
+    protocolVersion: str | None = None
+    description: str | None = None
     variables: TypeRefMap[ServerVariable]
-    security: Optional[list[SecurityScheme]] = None
-    tags: Optional[list[Tag]] = None
+    security: list[SecurityScheme] | None = None
+    tags: list[Tag] | None = None
     bindings: TypeRefMap[Bindings]
 
 
@@ -95,18 +97,18 @@ class Components(BaseComponents):
 class Info(ExtendableBaseModel):
     title: str
     version: str
-    description: Optional[str] = None
-    termsOfService: Optional[str] = None
-    contact: Optional[Contact] = None
-    license: Optional[License] = None
+    description: str | None = None
+    termsOfService: str | None = None
+    contact: Contact | None = None
+    license: License | None = None
 
 
 class AsyncAPI(ExtendableBaseModel):
     asyncapi: Literal["2.6.0"] = "2.6.0"
-    id: Optional[str] = None
+    id: str | None = None
     info: Info
-    defaultContentType: Optional[str] = None
+    defaultContentType: str | None = None
     servers: TypeRefMap[Server]
     channels: dict[str, ChannelItem]
-    components: Optional[Components] = None
-    tags: Optional[list[Tag]] = None
+    components: Components | None = None
+    tags: list[Tag] | None = None
