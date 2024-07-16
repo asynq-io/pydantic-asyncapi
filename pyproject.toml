@@ -8,8 +8,8 @@ dynamic = ["version"]
 description = 'Pydantic models of AsyncAPI schema'
 readme = "README.md"
 requires-python = ">=3.9"
-license = "MIT"
-keywords = []
+license = "Apache-2.0"
+keywords = ["pydantic", "asyncapi", "schema"]
 authors = [{ name = "RaRhAeu", email = "rarha_eu@protonmail.com" }]
 classifiers = [
     "Development Status :: 4 - Beta",
