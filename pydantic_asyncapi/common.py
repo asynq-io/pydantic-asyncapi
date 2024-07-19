@@ -34,14 +34,10 @@ class ExtendableBaseModel(BaseModel):
 
 
 class Reference(BaseModel):
-    # ref: str = Field(alias="$ref")
     ref: str = Field(validation_alias="$ref", serialization_alias="$ref")
 
 
-# if TYPE_CHECKING:
 TypeRefMap = Annotated[Optional[dict[str, Union[T, Reference]]], Field(default=None)]
-# else:
-# TypeRefMap = TypeAliasType("TypeRefMap", Optional[dict[str, Union[T, Reference]]], type_params=(T,))
 
 NonEmptyList = Annotated[list[T], annotated_types.MinLen(1)]
 
