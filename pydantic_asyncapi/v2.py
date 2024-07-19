@@ -109,6 +109,6 @@ class AsyncAPI(ExtendableBaseModel):
     info: Info
     defaultContentType: str | None = None
     servers: TypeRefMap[Server] = None
-    channels: dict[str, ChannelItem] = {}
+    channels: dict[str, ChannelItem]
     components: Components | None = None
     tags: list[Tag] | None = None
