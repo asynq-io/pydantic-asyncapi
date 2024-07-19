@@ -34,10 +34,10 @@ class ExtendableBaseModel(BaseModel):
 
 
 class Reference(BaseModel):
-    ref: str = Field(alias="$ref")
+    ref: str = Field(validation_alias="$ref", serialization_alias="$ref")
 
 
-TypeRefMap = Annotated[Optional[dict[str, Union[T, Reference]]], Field(default=None)]
+TypeRefMap = Annotated[Optional[dict[str, Union[T, Reference]]], ...]
 
 NonEmptyList = Annotated[list[T], annotated_types.MinLen(1)]
 
@@ -244,15 +244,15 @@ class BaseMessageTrait(ExtendableBaseModel):
     description: str | None = None
     tags: list[Tag] | None = None
     externalDocs: ExternalDocumentation | Reference | None = None
-    bindings: TypeRefMap[Bindings]
+    bindings: TypeRefMap[Bindings] = None
     examples: list[MessageExample] | None = None
 
 
 class BaseComponents(ExtendableBaseModel):
-    externalDocs: TypeRefMap[ExternalDocumentation]
-    tags: TypeRefMap[Tag]
-    correlationIds: TypeRefMap[CorrelationId]
-    messageBindings: TypeRefMap[Bindings]
-    serverBindings: TypeRefMap[Bindings]
-    channelBindings: TypeRefMap[Bindings]
-    operationBindings: TypeRefMap[Bindings]
+    externalDocs: TypeRefMap[ExternalDocumentation] = None
+    tags: TypeRefMap[Tag] = None
+    correlationIds: TypeRefMap[CorrelationId] = None
+    messageBindings: TypeRefMap[Bindings] = None
+    serverBindings: TypeRefMap[Bindings] = None
+    channelBindings: TypeRefMap[Bindings] = None
+    operationBindings: TypeRefMap[Bindings] = None
