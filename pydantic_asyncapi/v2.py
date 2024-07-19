@@ -46,7 +46,7 @@ class OperationTrait(ExtendableBaseModel):
     security: list[SecurityScheme] | None = None
     tags: list[Tag] | None = None
     externalDocs: ExternalDocumentation | Reference | None = None
-    bindings: TypeRefMap[Bindings]
+    bindings: TypeRefMap[Bindings] = None
 
 
 class Operation(OperationTrait):
@@ -61,12 +61,12 @@ class Parameter(BaseModel):
 
 
 class ChannelItem(ExtendableBaseModel):
-    ref: str | None = Field(None, alias="$ref")
+    ref: str | None = Field(None, validation_alias="$ref", serialization_alias="$ref")
     description: str | None = None
     servers: list[str] | None = None
     publish: Operation | None = None
     subscribe: Operation | None = None
-    parameters: TypeRefMap[Parameter]
+    parameters: TypeRefMap[Parameter] = None
     bindings: Bindings | None = None
 
 
@@ -78,20 +78,20 @@ class Server(ExtendableBaseModel):
     variables: TypeRefMap[ServerVariable]
     security: list[SecurityScheme] | None = None
     tags: list[Tag] | None = None
-    bindings: TypeRefMap[Bindings]
+    bindings: TypeRefMap[Bindings] = None
 
 
 class Components(BaseComponents):
-    schemas: TypeRefMap[Schema]
-    servers: TypeRefMap[Server]
-    channels: TypeRefMap[ChannelItem]
-    operations: TypeRefMap[Operation]
-    messages: TypeRefMap[Message]
-    securitySchemas: TypeRefMap[SecurityScheme]
-    serverVariables: TypeRefMap[ServerVariable]
-    parameters: TypeRefMap[Parameter]
-    operationTraits: TypeRefMap[OperationTrait]
-    messageTraits: TypeRefMap[MessageTrait]
+    schemas: TypeRefMap[Schema] = None
+    servers: TypeRefMap[Server] = None
+    channels: TypeRefMap[ChannelItem] = None
+    operations: TypeRefMap[Operation] = None
+    messages: TypeRefMap[Message] = None
+    securitySchemas: TypeRefMap[SecurityScheme] = None
+    serverVariables: TypeRefMap[ServerVariable] = None
+    parameters: TypeRefMap[Parameter] = None
+    operationTraits: TypeRefMap[OperationTrait] = None
+    messageTraits: TypeRefMap[MessageTrait] = None
 
 
 class Info(ExtendableBaseModel):
@@ -108,7 +108,7 @@ class AsyncAPI(ExtendableBaseModel):
     id: str | None = None
     info: Info
     defaultContentType: str | None = None
-    servers: TypeRefMap[Server]
-    channels: dict[str, ChannelItem]
+    servers: TypeRefMap[Server] = None
+    channels: dict[str, ChannelItem] = {}
     components: Components | None = None
     tags: list[Tag] | None = None

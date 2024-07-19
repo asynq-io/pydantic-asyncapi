@@ -37,11 +37,11 @@ class Server(ExtendableBaseModel):
     description: str | None = None
     title: str | None = None
     summary: str | None = None
-    variables: TypeRefMap[ServerVariable]
-    security: TypeRefMap[SecurityScheme]
+    variables: TypeRefMap[ServerVariable] = None
+    security: TypeRefMap[SecurityScheme] = None
     tags: list[Tag] | None = None
     externalDocs: ExternalDocumentation | Reference | None = None
-    bindings: TypeRefMap[Bindings]
+    bindings: TypeRefMap[Bindings] = None
 
 
 class MessageTrait(BaseMessageTrait):
@@ -63,15 +63,15 @@ class Parameter(ExtendableBaseModel):
 
 class Channel(ExtendableBaseModel):
     address: str | None = None
-    messages: TypeRefMap[Message]
+    messages: TypeRefMap[Message] = None
     title: str | None = None
     summary: str | None = None
     description: str | None = None
     servers: list[Reference] | None = None
-    parameters: TypeRefMap[Parameter]
+    parameters: TypeRefMap[Parameter] = None
     tags: list[Tag] | None = None
     externalDocs: ExternalDocumentation | Reference | None = None
-    bindings: TypeRefMap[Bindings]
+    bindings: TypeRefMap[Bindings] = None
 
 
 class OperationReplyAddress(BaseModel):
@@ -92,7 +92,7 @@ class OperationTrait(ExtendableBaseModel):
     security: list[SecurityScheme | Reference] | None = None
     tags: list[Tag] | None = None
     externalDocs: ExternalDocumentation | Reference | None = None
-    bindings: TypeRefMap[Bindings]
+    bindings: TypeRefMap[Bindings] = None
     reply: Reply | Reference | None = None
 
 
@@ -104,18 +104,18 @@ class Operation(OperationTrait):
 
 
 class Components(BaseComponents):
-    schemas: TypeRefMap[MultiFormatSchema | Schema]
-    servers: TypeRefMap[Server]
-    channels: TypeRefMap[Channel]
-    operations: TypeRefMap[Operation]
-    messages: TypeRefMap[Message]
-    securitySchemas: TypeRefMap[SecurityScheme]
-    serverVariables: TypeRefMap[ServerVariable]
-    parameters: TypeRefMap[Parameter]
-    replies: TypeRefMap[Reply]
-    replyAddresses: TypeRefMap[OperationReplyAddress]
-    operationTraits: TypeRefMap[OperationTrait]
-    messageTraits: TypeRefMap[MessageTrait]
+    schemas: TypeRefMap[MultiFormatSchema | Schema] = None
+    servers: TypeRefMap[Server] = None
+    channels: TypeRefMap[Channel] = None
+    operations: TypeRefMap[Operation] = None
+    messages: TypeRefMap[Message] = None
+    securitySchemas: TypeRefMap[SecurityScheme] = None
+    serverVariables: TypeRefMap[ServerVariable] = None
+    parameters: TypeRefMap[Parameter] = None
+    replies: TypeRefMap[Reply] = None
+    replyAddresses: TypeRefMap[OperationReplyAddress] = None
+    operationTraits: TypeRefMap[OperationTrait] = None
+    messageTraits: TypeRefMap[MessageTrait] = None
 
 
 class Info(ExtendableBaseModel):
@@ -133,8 +133,8 @@ class AsyncAPI(ExtendableBaseModel):
     asyncapi: Literal["3.0.0"] = "3.0.0"
     id: str | None = None
     info: Info
-    servers: TypeRefMap[Server]
+    servers: TypeRefMap[Server] = None
     defaultContentType: str | None = None
-    channels: TypeRefMap[Channel]
-    operations: TypeRefMap[Operation]
+    channels: TypeRefMap[Channel] = None
+    operations: TypeRefMap[Operation] = None
     components: Components | None = None
