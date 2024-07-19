@@ -37,7 +37,7 @@ class Reference(BaseModel):
     ref: str = Field(validation_alias="$ref", serialization_alias="$ref")
 
 
-TypeRefMap = Annotated[Optional[dict[str, Union[T, Reference]]], Field(default=None)]
+TypeRefMap = Annotated[Optional[dict[str, Union[T, Reference]]], ...]
 
 NonEmptyList = Annotated[list[T], annotated_types.MinLen(1)]
 
