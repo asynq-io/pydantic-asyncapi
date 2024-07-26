@@ -113,7 +113,7 @@ class Schema(BaseModel):
     maxProperties: Optional[NonNegativeInt] = None
     minProperties: Optional[NonNegativeInt] = None
     required: Optional[list[str]] = None
-    additionalProperties: Optional["Schema"] = None
+    additionalProperties: Optional[Union["Schema", bool]] = None
     definitions: Optional[dict[str, "Schema"]] = {}
     properties: Optional[dict[str, "Schema"]] = {}
     patternProperties: Optional[dict[str, "Schema"]] = {}
