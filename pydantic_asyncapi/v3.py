@@ -47,7 +47,7 @@ class MessageTrait(BaseMessageTrait):
 
 
 class Message(MessageTrait):
-    payload: Union[MultiFormatSchema, Schema, Reference]
+    payload: Union[Schema, Reference, MultiFormatSchema]
     traits: Optional[list[Union[MessageTrait, Reference]]] = None
 
 
