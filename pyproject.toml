@@ -24,9 +24,9 @@ classifiers = [
     "Topic :: Software Development :: Libraries",
     "Intended Audience :: Developers",
     "Natural Language :: English",
-    "Framework :: Pydantic :: 2"
+    "Framework :: Pydantic :: 2",
 ]
-dependencies = ["pydantic >2.0,<3"]
+dependencies = ["pydantic>=2.0.2,<3.0.0"]
 
 [project.urls]
 Documentation = "https://github.com/asynq-io/pydantic-asyncapi#readme"
