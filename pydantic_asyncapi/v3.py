@@ -1,6 +1,4 @@
-from __future__ import annotations
-
-from typing import Any, Literal
+from typing import Any, Literal, Optional, Union
 
 from pydantic import AnyUrl, Field
 
@@ -32,15 +30,15 @@ class MultiFormatSchema(ExtendableBaseModel):
 class Server(ExtendableBaseModel):
     host: str
     protocol: str
-    protocolVersion: str | None = None
-    pathname: str | None = None
-    description: str | None = None
-    title: str | None = None
-    summary: str | None = None
+    protocolVersion: Optional[str] = None
+    pathname: Optional[str] = None
+    description: Optional[str] = None
+    title: Optional[str] = None
+    summary: Optional[str] = None
     variables: TypeRefMap[ServerVariable] = None
     security: TypeRefMap[SecurityScheme] = None
-    tags: list[Tag] | None = None
-    externalDocs: ExternalDocumentation | Reference | None = None
+    tags: Optional[list[Tag]] = None
+    externalDocs: Optional[Union[ExternalDocumentation, Reference]] = None
     bindings: TypeRefMap[Bindings] = None
 
 
@@ -49,62 +47,62 @@ class MessageTrait(BaseMessageTrait):
 
 
 class Message(MessageTrait):
-    payload: MultiFormatSchema | Schema | Reference
-    traits: list[MessageTrait | Reference] | None = None
+    payload: Union[MultiFormatSchema, Schema, Reference]
+    traits: Optional[list[Union[MessageTrait, Reference]]] = None
 
 
 class Parameter(ExtendableBaseModel):
-    enum: StrEnum | None = None
-    default: str | None = None
-    description: str | None = None
-    examples: list[str] | None = None
-    location: str | None = None
+    enum: Optional[StrEnum] = None
+    default: Optional[str] = None
+    description: Optional[str] = None
+    examples: Optional[list[str]] = None
+    location: Optional[str] = None
 
 
 class Channel(ExtendableBaseModel):
-    address: str | None = None
+    address: Optional[str] = None
     messages: TypeRefMap[Message] = None
-    title: str | None = None
-    summary: str | None = None
-    description: str | None = None
-    servers: list[Reference] | None = None
+    title: Optional[str] = None
+    summary: Optional[str] = None
+    description: Optional[str] = None
+    servers: Optional[list[Reference]] = None
     parameters: TypeRefMap[Parameter] = None
-    tags: list[Tag] | None = None
-    externalDocs: ExternalDocumentation | Reference | None = None
+    tags: Optional[list[Tag]] = None
+    externalDocs: Optional[Union[ExternalDocumentation, Reference]] = None
     bindings: TypeRefMap[Bindings] = None
 
 
 class OperationReplyAddress(BaseModel):
     location: str
-    description: str | None
+    description: Optional[str]
 
 
 class Reply(BaseModel):
-    address: OperationReplyAddress | Reference
+    address: Union[OperationReplyAddress, Reference]
     channel: Reference
     messages: list[Reference]
 
 
 class OperationTrait(ExtendableBaseModel):
-    title: str | None = None
-    summary: str | None = None
-    description: str | None = None
-    security: list[SecurityScheme | Reference] | None = None
-    tags: list[Tag] | None = None
-    externalDocs: ExternalDocumentation | Reference | None = None
+    title: Optional[str] = None
+    summary: Optional[str] = None
+    description: Optional[str] = None
+    security: Optional[list[Union[SecurityScheme, Reference]]] = None
+    tags: Optional[list[Tag]] = None
+    externalDocs: Optional[Union[ExternalDocumentation, Reference]] = None
     bindings: TypeRefMap[Bindings] = None
-    reply: Reply | Reference | None = None
+    reply: Optional[Union[Reply, Reference]] = None
 
 
 class Operation(OperationTrait):
     action: Literal["send", "receive"]
     channel: Reference
     messages: list[Reference] = []
-    traits: list[OperationTrait | Reference] | None = None
+    traits: Optional[list[Union[OperationTrait, Reference]]] = None
 
 
 class Components(BaseComponents):
-    schemas: TypeRefMap[MultiFormatSchema | Schema] = None
+    schemas: TypeRefMap[Union[MultiFormatSchema, Schema]] = None
     servers: TypeRefMap[Server] = None
     channels: TypeRefMap[Channel] = None
     operations: TypeRefMap[Operation] = None
@@ -121,20 +119,20 @@ class Components(BaseComponents):
 class Info(ExtendableBaseModel):
     title: str
     version: str
-    description: str | None = None
-    termsOfService: AnyUrl | None = None
-    contact: Contact | None = None
-    license: License | None = None
-    tags: list[Tag] | None = None
-    externalDocs: ExternalDocumentation | Reference | None = None
+    description: Optional[str] = None
+    termsOfService: Optional[AnyUrl] = None
+    contact: Optional[Contact] = None
+    license: Optional[License] = None
+    tags: Optional[list[Tag]] = None
+    externalDocs: Optional[Union[ExternalDocumentation, Reference]] = None
 
 
 class AsyncAPI(ExtendableBaseModel):
     asyncapi: Literal["3.0.0"] = "3.0.0"
-    id: str | None = None
+    id: Optional[str] = None
     info: Info
     servers: TypeRefMap[Server] = None
-    defaultContentType: str | None = None
+    defaultContentType: Optional[str] = None
     channels: TypeRefMap[Channel] = None
     operations: TypeRefMap[Operation] = None
-    components: Components | None = None
+    components: Optional[Components] = None

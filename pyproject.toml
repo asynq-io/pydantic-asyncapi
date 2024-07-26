@@ -20,8 +20,13 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Framework :: Pydantic :: 2",
 ]
-dependencies = ["pydantic >2.0,<3"]
+dependencies = ["pydantic>=2.0.2,<3.0.0"]
 
 [project.urls]
 Documentation = "https://github.com/asynq-io/pydantic-asyncapi#readme"
@@ -42,7 +47,7 @@ dependencies = [
 ]
 
 [tool.hatch.envs.default.scripts]
-test = "pytest {args:tests}"
+test = "pytest --cov=./pydantic_asyncapi {args:tests}"
 check = [
     "ruff check ./pydantic_asyncapi",
     "ruff format --check ./pydantic_asyncapi",
