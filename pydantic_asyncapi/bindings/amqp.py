@@ -9,16 +9,6 @@ from pydantic import BaseModel, Field, PositiveInt
 
 
 class Queue(BaseModel):
-    """A class to represent a queue.
-
-    Attributes:
-        name : name of the queue
-        durable : indicates if the queue is durable
-        exclusive : indicates if the queue is exclusive
-        autoDelete : indicates if the queue should be automatically deleted
-        vhost : virtual host of the queue (default is "/")
-    """
-
     name: str
     durable: bool
     exclusive: bool
