@@ -2,7 +2,6 @@
 References: https://github.com/asyncapi/bindings/tree/master/nats
 """
 
-
 from pydantic import BaseModel
 
 
