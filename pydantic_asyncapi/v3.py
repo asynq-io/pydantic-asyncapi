@@ -6,15 +6,17 @@ from .common import (
     BaseComponents,
     BaseMessageTrait,
     BaseModel,
-    Bindings,
+    ChannelBindings,
     Contact,
     ExtendableBaseModel,
     ExternalDocumentation,
     License,
+    OperationBindings,
     Reference,
     Schema,
     SchemaFormat,
     SecurityScheme,
+    ServerBindings,
     ServerVariable,
     StrEnum,
     Tag,
@@ -24,7 +26,7 @@ from .common import (
 
 class MultiFormatSchema(ExtendableBaseModel):
     schemaFormat: SchemaFormat = "application/vnd.aai.asyncapi+json;version=3.0.0"
-    schema_: Any = Field(alias="schema")
+    schema_: Any = Field(..., alias="schema")
 
 
 class Server(ExtendableBaseModel):
@@ -39,7 +41,7 @@ class Server(ExtendableBaseModel):
     security: TypeRefMap[SecurityScheme] = None
     tags: Optional[list[Tag]] = None
     externalDocs: Optional[Union[ExternalDocumentation, Reference]] = None
-    bindings: TypeRefMap[Bindings] = None
+    bindings: Optional[ServerBindings] = None
 
 
 class MessageTrait(BaseMessageTrait):
@@ -69,7 +71,7 @@ class Channel(ExtendableBaseModel):
     parameters: TypeRefMap[Parameter] = None
     tags: Optional[list[Tag]] = None
     externalDocs: Optional[Union[ExternalDocumentation, Reference]] = None
-    bindings: TypeRefMap[Bindings] = None
+    bindings: Optional[ChannelBindings] = None
 
 
 class OperationReplyAddress(BaseModel):
@@ -90,7 +92,7 @@ class OperationTrait(ExtendableBaseModel):
     security: Optional[list[Union[SecurityScheme, Reference]]] = None
     tags: Optional[list[Tag]] = None
     externalDocs: Optional[Union[ExternalDocumentation, Reference]] = None
-    bindings: TypeRefMap[Bindings] = None
+    bindings: Optional[OperationBindings] = None
     reply: Optional[Union[Reply, Reference]] = None
 
 

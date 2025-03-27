@@ -6,9 +6,9 @@ from .__about__ import __version__
 from .v2 import AsyncAPI as AsyncAPIV2
 from .v3 import AsyncAPI as AsyncAPIV3
 
-T = Annotated[Union[AsyncAPIV2, AsyncAPIV3], Field(discriminator="asyncapi")]
+AsyncAPIType = Annotated[Union[AsyncAPIV2, AsyncAPIV3], Field(discriminator="asyncapi")]
 
-AsyncAPI = RootModel[T]
+AsyncAPI = RootModel[AsyncAPIType]
 
 
 __all__ = ["__version__"]
