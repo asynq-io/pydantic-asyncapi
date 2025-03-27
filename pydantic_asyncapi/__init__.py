@@ -11,4 +11,4 @@ AsyncAPIType = Annotated[Union[AsyncAPIV2, AsyncAPIV3], Field(discriminator="asy
 AsyncAPI = RootModel[AsyncAPIType]
 
 
-__all__ = ["__version__"]
+__all__ = ["__version__", "AsyncAPI", "AsyncAPIType"]
