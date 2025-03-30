@@ -7,14 +7,16 @@ from .common import (
     BaseComponents,
     BaseMessageTrait,
     BaseModel,
-    Bindings,
+    ChannelBindings,
     Contact,
     ExtendableBaseModel,
     ExternalDocumentation,
     License,
+    OperationBindings,
     Reference,
     Schema,
     SecurityScheme,
+    ServerBindings,
     ServerVariable,
     Tag,
     TypeRefMap,
@@ -44,7 +46,7 @@ class OperationTrait(ExtendableBaseModel):
     security: Optional[list[SecurityScheme]] = None
     tags: Optional[list[Tag]] = None
     externalDocs: Optional[Union[ExternalDocumentation, Reference]] = None
-    bindings: TypeRefMap[Bindings] = None
+    bindings: Optional[OperationBindings] = None
 
 
 class Operation(OperationTrait):
@@ -67,7 +69,7 @@ class ChannelItem(ExtendableBaseModel):
     publish: Optional[Operation] = None
     subscribe: Optional[Operation] = None
     parameters: TypeRefMap[Parameter] = None
-    bindings: Optional[Bindings] = None
+    bindings: Optional[ChannelBindings] = None
 
 
 class Server(ExtendableBaseModel):
@@ -78,18 +80,18 @@ class Server(ExtendableBaseModel):
     variables: TypeRefMap[ServerVariable]
     security: Optional[list[SecurityScheme]] = None
     tags: Optional[list[Tag]] = None
-    bindings: TypeRefMap[Bindings] = None
+    bindings: Optional[ServerBindings] = None
 
 
 class Components(BaseComponents):
     schemas: TypeRefMap[Schema] = None
     servers: TypeRefMap[Server] = None
+    serverVariables: TypeRefMap[ServerVariable] = None
     channels: TypeRefMap[ChannelItem] = None
-    operations: TypeRefMap[Operation] = None
     messages: TypeRefMap[Message] = None
     securitySchemas: TypeRefMap[SecurityScheme] = None
-    serverVariables: TypeRefMap[ServerVariable] = None
     parameters: TypeRefMap[Parameter] = None
+    operations: TypeRefMap[Operation] = None
     operationTraits: TypeRefMap[OperationTrait] = None
     messageTraits: TypeRefMap[MessageTrait] = None
 

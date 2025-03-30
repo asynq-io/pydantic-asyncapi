@@ -26,9 +26,7 @@ def test_parse(filename):
     model = cls.model_validate(data)
     assert isinstance(model, cls)
 
-    assert (
-        model.model_dump(by_alias=True, exclude_none=True, exclude_unset=True) == data
-    )
+    assert model.model_dump(by_alias=True, exclude_unset=True) == data
 
 
 @pytest.mark.parametrize(
@@ -38,7 +36,4 @@ def test_type_adapter(filename):
     data = yaml_data(filename)
     assert isinstance(data, dict)
     validated = AsyncAPI.model_validate(data)
-    assert (
-        validated.model_dump(by_alias=True, exclude_none=True, exclude_unset=True)
-        == data
-    )
+    assert validated.model_dump(by_alias=True, exclude_unset=True) == data

@@ -10,6 +10,15 @@ from pydantic import (
 )
 from pydantic import BaseModel as PydanticBaseModel
 
+from .bindings.amqp import AMQPChannelBinding, AMQPMessageBinding, AMQPOperationBinding
+from .bindings.kafka import (
+    KafkaChannelBinding,
+    KafkaOperationBinding,
+    KafkaServerBinding,
+)
+from .bindings.nats import NatsOperationBinding
+from .bindings.sqs import SQSChannelBinding, SQSOperationBinding
+
 T = TypeVar("T")
 
 
@@ -36,6 +45,7 @@ class Reference(BaseModel):
 
 
 TypeRefMap = Annotated[Optional[dict[str, Union[T, Reference]]], ...]
+TypeOrRef = Annotated[Optional[Union[T, Reference]], ...]
 
 NonEmptyList = Annotated[list[T], annotated_types.MinLen(1)]
 
@@ -181,7 +191,7 @@ class OAuthFlows(ExtendableBaseModel):
 class SecurityScheme(ExtendableBaseModel):
     type: SecuritySchemaType
     name: str
-    in_: str = Field(alias="in")
+    in_: str = Field(..., alias="in")
     description: Optional[str] = None
     scheme: str
     bearerFormat: Optional[str] = None
@@ -200,28 +210,56 @@ class CorrelationId(ExtendableBaseModel):
 class Binding(ExtendableBaseModel):
     """Base model for any binding. Contains extra fields depending on binding type."""
 
-    bindingVersion: Optional[str] = None
+    bindingVersion: Optional[str] = "latest"
 
 
-class Bindings(ExtendableBaseModel):
-    ws: Optional[Binding] = None
-    kafka: Optional[Binding] = None
-    anypointmq: Optional[Binding] = None
-    amqp: Optional[Binding] = None
-    amqp1: Optional[Binding] = None
-    mqtt: Optional[Binding] = None
-    mqtt5: Optional[Binding] = None
-    nats: Optional[Binding] = None
-    jms: Optional[Binding] = None
-    sns: Optional[Binding] = None
-    solace: Optional[Binding] = None
-    sqs: Optional[Binding] = None
-    stomp: Optional[Binding] = None
-    redis: Optional[Binding] = None
-    mercure: Optional[Binding] = None
-    ibmmq: Optional[Binding] = None
-    googlepubsub: Optional[Binding] = None
-    pulsar: Optional[Binding] = None
+# TODO: implement the rest of the bindings
+class AnyBindings(ExtendableBaseModel):
+    ws: TypeOrRef[Binding] = None
+    anypointmq: TypeOrRef[Binding] = None
+    amqp1: TypeOrRef[Binding] = None
+    mqtt: TypeOrRef[Binding] = None
+    mqtt5: TypeOrRef[Binding] = None
+    jms: TypeOrRef[Binding] = None
+    sns: TypeOrRef[Binding] = None
+    solace: TypeOrRef[Binding] = None
+    stomp: TypeOrRef[Binding] = None
+    mercure: TypeOrRef[Binding] = None
+    ibmmq: TypeOrRef[Binding] = None
+    googlepubsub: TypeOrRef[Binding] = None
+    pulsar: TypeOrRef[Binding] = None
+
+
+class ServerBindings(AnyBindings):
+    amqp: None = None
+    kafka: TypeOrRef[KafkaServerBinding] = None
+    sqs: None = None
+    nats: None = None
+    redis: None = None
+
+
+class ChannelBindings(AnyBindings):
+    amqp: TypeOrRef[AMQPChannelBinding] = None
+    kafka: TypeOrRef[KafkaChannelBinding] = None
+    sqs: TypeOrRef[SQSChannelBinding] = None
+    nats: None = None
+    redis: None = None
+
+
+class OperationBindings(AnyBindings):
+    amqp: TypeOrRef[AMQPOperationBinding] = None
+    kafka: TypeOrRef[KafkaOperationBinding] = None
+    sqs: TypeOrRef[SQSOperationBinding] = None
+    nats: TypeOrRef[NatsOperationBinding] = None
+    redis: None = None
+
+
+class MessageBindings(AnyBindings):
+    amqp: Optional[Union[AMQPMessageBinding, Reference]] = None
+    kafka: None = None
+    sqs: None = None
+    nats: None = None
+    redis: None = None
 
 
 class MessageExample(ExtendableBaseModel):
@@ -242,7 +280,7 @@ class BaseMessageTrait(ExtendableBaseModel):
     description: Optional[str] = None
     tags: Optional[list[Tag]] = None
     externalDocs: Optional[Union[ExternalDocumentation, Reference]] = None
-    bindings: TypeRefMap[Bindings] = None
+    bindings: Optional[MessageBindings] = None
     examples: Optional[list[MessageExample]] = None
 
 
@@ -250,7 +288,7 @@ class BaseComponents(ExtendableBaseModel):
     externalDocs: TypeRefMap[ExternalDocumentation] = None
     tags: TypeRefMap[Tag] = None
     correlationIds: TypeRefMap[CorrelationId] = None
-    messageBindings: TypeRefMap[Bindings] = None
-    serverBindings: TypeRefMap[Bindings] = None
-    channelBindings: TypeRefMap[Bindings] = None
-    operationBindings: TypeRefMap[Bindings] = None
+    messageBindings: Optional[MessageBindings] = None
+    serverBindings: Optional[ServerBindings] = None
+    channelBindings: Optional[ChannelBindings] = None
+    operationBindings: Optional[OperationBindings] = None
