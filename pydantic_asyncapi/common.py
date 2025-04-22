@@ -9,6 +9,11 @@ from .bindings.googlepubsub import (
     GooglePubSubChannelBinding,
     GooglePubSubMessageBinding,
 )
+from .bindings.ibmmq import (
+    IBMMQChannelBinding,
+    IBMMQOperationBinding,
+    IBMMQServerBinding,
+)
 from .bindings.kafka import (
     KafkaChannelBinding,
     KafkaOperationBinding,
@@ -20,6 +25,7 @@ from .bindings.pulsar import (
     PulsarChannelBinding,
     PulsarServerBinding,
 )
+from .bindings.sns import SNSChannelBinding, SNSOperationBinding
 from .bindings.solace import SolaceOperationBinding, SolaceServerBinding
 from .bindings.sqs import SQSChannelBinding, SQSOperationBinding
 from .bindings.websockets import WebSocketsChannelBinding
@@ -122,64 +128,78 @@ class CorrelationId(ExtendableBaseModel):
     )
 
 
-class Binding(ExtendableBaseModel):
-    """Base model for any binding. Contains extra fields depending on binding type."""
-
-    bindingVersion: Optional[str] = "latest"
-
-
-class AnyBindings(ExtendableBaseModel):
-    jms: TypeOrRef[Binding] = None
-    mercure: TypeOrRef[Binding] = None
-    ibmmq: TypeOrRef[Binding] = None
-
-
-class ServerBindings(AnyBindings):
+class ServerBindings(ExtendableBaseModel):
     amqp: None = None
+    amqp1: None = None
+    anypointmq: None = None
     googlepubsub: None = None
+    http: None = None
+    ibmmq: TypeOrRef[IBMMQServerBinding] = None
     kafka: TypeOrRef[KafkaServerBinding] = None
     mqtt: TypeOrRef[MQTTServerBinding] = None
+    nats: None = None
     pulsar: TypeOrRef[PulsarServerBinding] = None
+    sns: None = None
     solace: TypeOrRef[SolaceServerBinding] = None
     sqs: None = None
-    nats: None = None
+    stomp: None = None
     redis: None = None
     ws: None = None
 
 
-class ChannelBindings(AnyBindings):
+class ChannelBindings(ExtendableBaseModel):
     amqp: TypeOrRef[AMQPChannelBinding] = None
+    amqp1: None = None
     anypointmq: TypeOrRef[AnypointMQChannelBinding] = None
     googlepubsub: TypeOrRef[GooglePubSubChannelBinding] = None
+    http: None = None
+    ibmmq: TypeOrRef[IBMMQChannelBinding] = None
     kafka: TypeOrRef[KafkaChannelBinding] = None
-    pulsar: TypeOrRef[PulsarChannelBinding] = None
-    sqs: TypeOrRef[SQSChannelBinding] = None
-    ws: TypeOrRef[WebSocketsChannelBinding] = None
+    mqtt: None = None
     nats: None = None
+    pulsar: TypeOrRef[PulsarChannelBinding] = None
+    sns: TypeOrRef[SNSChannelBinding] = None
+    solace: None = None
+    sqs: TypeOrRef[SQSChannelBinding] = None
+    stomp: None = None
     redis: None = None
+    ws: TypeOrRef[WebSocketsChannelBinding] = None
 
 
-class OperationBindings(AnyBindings):
+class OperationBindings(ExtendableBaseModel):
     amqp: TypeOrRef[AMQPOperationBinding] = None
-    mqtt: TypeOrRef[MQTTOperationBinding] = None
-    kafka: TypeOrRef[KafkaOperationBinding] = None
-    sqs: TypeOrRef[SQSOperationBinding] = None
-    nats: TypeOrRef[NatsOperationBinding] = None
-    solace: TypeOrRef[SolaceOperationBinding] = None
+    amqp1: None = None
+    anypointmq: None = None
     googlepubsub: None = None
+    http: None = None
+    ibmmq: TypeOrRef[IBMMQOperationBinding] = None
+    kafka: TypeOrRef[KafkaOperationBinding] = None
+    mqtt: TypeOrRef[MQTTOperationBinding] = None
+    nats: TypeOrRef[NatsOperationBinding] = None
+    pulsar: None = None
+    sns: TypeOrRef[SNSOperationBinding] = None
+    solace: TypeOrRef[SolaceOperationBinding] = None
+    sqs: TypeOrRef[SQSOperationBinding] = None
+    stomp: None = None
     redis: None = None
     ws: None = None
 
 
-class MessageBindings(AnyBindings):
+class MessageBindings(ExtendableBaseModel):
     amqp: Optional[TypeOrRef[AMQPMessageBinding]] = None
+    amqp1: None = None
     anypointmq: Optional[TypeOrRef[AnypointMQMessageBinding]] = None
     googlepubsub: Optional[TypeOrRef[GooglePubSubMessageBinding]] = None
+    http: None = None
     kafka: None = None
     mqtt: Optional[TypeOrRef[MQTTMessageBinding]] = None
-    sqs: None = None
     nats: None = None
+    pulsar: None = None
+    sns: None = None
+    solace: None = None
+    sqs: None = None
     redis: None = None
+    ws: None = None
 
 
 class MessageExample(ExtendableBaseModel):
