@@ -2,6 +2,7 @@
 
 References: https://github.com/asyncapi/bindings/tree/master/http
 """
+
 from typing import Literal
 
 from pydantic import BaseModel

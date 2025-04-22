@@ -2,6 +2,7 @@
 
 References: https://github.com/asyncapi/bindings/tree/master/mqtt
 """
+
 from typing import Optional, Union
 
 from pydantic import BaseModel

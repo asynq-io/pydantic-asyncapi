@@ -2,6 +2,7 @@
 
 References: https://github.com/asyncapi/bindings/tree/master/sns/3.0.0
 """
+
 from typing import Any, Literal, Optional, Union
 
 from pydantic import BaseModel

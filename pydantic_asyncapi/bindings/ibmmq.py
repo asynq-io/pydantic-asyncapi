@@ -1,6 +1,7 @@
 """AsyncAPI IBM MQ Bindings.
 References: https://github.com/asyncapi/bindings/tree/master/ibmmq
 """
+
 from typing import Literal, Optional
 
 from pydantic import BaseModel, NonNegativeInt, PositiveInt
