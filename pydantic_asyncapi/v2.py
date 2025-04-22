@@ -3,23 +3,20 @@ from typing import Annotated, Any, Literal, Optional, Union
 import annotated_types
 from pydantic import AnyUrl, Field
 
+from .base import BaseModel, ExtendableBaseModel, Reference, TypeRefMap
 from .common import (
     BaseComponents,
     BaseMessageTrait,
-    BaseModel,
     ChannelBindings,
     Contact,
-    ExtendableBaseModel,
     ExternalDocumentation,
     License,
     OperationBindings,
-    Reference,
     Schema,
     SecurityScheme,
     ServerBindings,
     ServerVariable,
     Tag,
-    TypeRefMap,
 )
 
 
