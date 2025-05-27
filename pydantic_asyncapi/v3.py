@@ -2,25 +2,20 @@ from typing import Any, Literal, Optional, Union
 
 from pydantic import AnyUrl, Field
 
+from .base import BaseModel, ExtendableBaseModel, Reference, Schema, StrEnum, TypeRefMap
 from .common import (
     BaseComponents,
     BaseMessageTrait,
-    BaseModel,
     ChannelBindings,
     Contact,
-    ExtendableBaseModel,
     ExternalDocumentation,
     License,
     OperationBindings,
-    Reference,
-    Schema,
     SchemaFormat,
     SecurityScheme,
     ServerBindings,
     ServerVariable,
-    StrEnum,
     Tag,
-    TypeRefMap,
 )
 
 
