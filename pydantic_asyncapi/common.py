@@ -83,9 +83,9 @@ class Tag(ExtendableBaseModel):
 
 
 class Contact(ExtendableBaseModel):
-    name: str
-    url: AnyUrl
-    email: str
+    name: Optional[str] = None
+    url: Optional[AnyUrl] = None
+    email: Optional[str] = None
 
 
 class ServerVariable(ExtendableBaseModel):
