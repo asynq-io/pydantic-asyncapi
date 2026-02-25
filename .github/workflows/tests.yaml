@@ -32,11 +32,20 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: uv sync --locked --dev
-      - name: Lint
+      - name: Check dependencies
+        run: uv lock --check
+      - name: Ruff
         run: |
-          uv run ruff check ./pydantic_asyncapi
-          uv run ruff format --check ./pydantic_asyncapi
-          uv run mypy --install-types --non-interactive pydantic_asyncapi tests
-          uv run bandit -r ./pydantic_asyncapi
-      - name: Test
-        run: uv run pytest
+          uv run ruff check .
+          uv run ruff format . --check
+      - name: Mypy
+        run: uv run mypy .
+      - name: Bandit
+        run: uv run bandit --skip B101 -r ./pydantic_asyncapi
+      - name: Pytest
+        run: uv run pytest -v --cov-report term-missing --cov-report xml:/tmp/coverage.xml --junitxml=/tmp/pytest.xml
+      - name: Coverage Report
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-xml-coverage-path: /tmp/coverage.xml
+          junitxml-path: /tmp/pytest.xml
