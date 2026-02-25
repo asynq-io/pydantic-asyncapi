@@ -39,7 +39,7 @@ jobs:
           uv run ruff check .
           uv run ruff format . --check
       - name: Mypy
-        run: uv run mypy .
+        run: uv run mypy ./pydantic_asyncapi ./tests
       - name: Bandit
         run: uv run bandit --skip B101 -r ./pydantic_asyncapi
       - name: Pytest
