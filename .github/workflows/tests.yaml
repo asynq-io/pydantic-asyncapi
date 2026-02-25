@@ -1,4 +1,7 @@
 name: Tests
+permissions:
+  contents: read
+  pull-requests: write
 on:
   push:
     branches:
@@ -15,17 +18,34 @@ jobs:
   tests:
     strategy:
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
     name: "Python ${{ matrix.python-version }}"
     runs-on: "ubuntu-latest"
     steps:
       - uses: actions/checkout@v6
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.10.6"
       - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install Hatch
-        run: pipx install hatch
-      - name: Lint
-        run: hatch run default:check
-      - name: Test
-        run: hatch run default:test
+      - name: Install dependencies
+        run: uv sync --locked --dev
+      - name: Check dependencies
+        run: uv lock --check
+      - name: Ruff
+        run: |
+          uv run ruff check .
+          uv run ruff format . --check
+      - name: Mypy
+        run: uv run mypy ./pydantic_asyncapi
+      - name: Bandit
+        run: uv run bandit --skip B101 -r ./pydantic_asyncapi
+      - name: Pytest
+        run: uv run pytest -v --cov-report term-missing --cov-report xml:/tmp/coverage.xml --junitxml=/tmp/pytest.xml
+      - name: Coverage Report
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-xml-coverage-path: /tmp/coverage.xml
+          junitxml-path: /tmp/pytest.xml

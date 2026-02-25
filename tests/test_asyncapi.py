@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 
 import pytest
 import yaml
@@ -7,17 +7,18 @@ from pydantic_asyncapi import AsyncAPI
 from pydantic_asyncapi.v2 import AsyncAPI as AsyncAPIV2
 from pydantic_asyncapi.v3 import AsyncAPI as AsyncAPIV3
 
-BASE_DIR = os.path.dirname(__file__)
+BASE_DIR = Path(__file__).parent
 
 
 def yaml_data(path):
-    filename = os.path.join(BASE_DIR, "fixtures", path)
+    filename = BASE_DIR / "fixtures" / path
     with open(filename) as f:
         return yaml.safe_load(f)
 
 
 @pytest.mark.parametrize(
-    "filename", ["v2/simple.yaml", "v3/simple.yaml", "v3/backend.yaml"]
+    "filename",
+    ["v2/simple.yaml", "v3/simple.yaml", "v3/backend.yaml"],
 )
 def test_parse(filename):
     cls = AsyncAPIV2 if filename.startswith("v2") else AsyncAPIV3
@@ -30,7 +31,8 @@ def test_parse(filename):
 
 
 @pytest.mark.parametrize(
-    "filename", ["v2/simple.yaml", "v3/simple.yaml", "v3/backend.yaml"]
+    "filename",
+    ["v2/simple.yaml", "v3/simple.yaml", "v3/backend.yaml"],
 )
 def test_type_adapter(filename):
     data = yaml_data(filename)
