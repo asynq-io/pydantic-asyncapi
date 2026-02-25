@@ -59,7 +59,9 @@ class Parameter(BaseModel):
 
 class ChannelItem(ExtendableBaseModel):
     ref: Optional[str] = Field(
-        None, validation_alias="$ref", serialization_alias="$ref"
+        None,
+        validation_alias="$ref",
+        serialization_alias="$ref",
     )
     description: Optional[str] = None
     servers: Optional[list[str]] = None

@@ -124,7 +124,7 @@ class SecurityScheme(ExtendableBaseModel):
 class CorrelationId(ExtendableBaseModel):
     description: Optional[str] = None
     location: str = Field(
-        pattern=r"^\$message\.(header|payload)#(\/(([^\/~])|(~[01]))*)*"
+        pattern=r"^\$message\.(header|payload)#(\/(([^\/~])|(~[01]))*)*",
     )
 
 

@@ -1,34 +1,37 @@
 repos:
-  - repo: https://github.com/asottile/yesqa
-    rev: v1.2.3
-    hooks:
-      - id: yesqa
-
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
+    rev: v5.0.0
     hooks:
-      - id: check-merge-conflict
-      - id: mixed-line-ending
-      - id: check-toml
+      - id: check-added-large-files
+      - id: check-docstring-first
+      - id: check-json
       - id: check-yaml
-        args: [--allow-multiple-documents]
+      - id: debug-statements
+      - id: end-of-file-fixer
+      - id: name-tests-test
+        args: ["--pytest-test-first"]
+      - id: trailing-whitespace
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: "v0.1.13"
+    rev: v0.14.9
     hooks:
       - id: ruff
         args: ["--fix"]
       - id: ruff-format
 
   - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.4
+    rev: 1.9.2
     hooks:
       - id: bandit
         args: ["--skip", "B101"]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.2.0
+    rev: v1.19.1
     hooks:
       - id: mypy
-        additional_dependencies: ["types-PyYAML"]
+        args: ["--install-types", "--non-interactive"]
 
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.10.6
+    hooks:
+      - id: uv-lock

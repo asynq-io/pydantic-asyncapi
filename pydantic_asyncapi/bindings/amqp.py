@@ -47,7 +47,8 @@ class ExchangeBinding(BaseModel):
 
 
 AMQPChannelBinding = Annotated[
-    Union[QueueBinding, ExchangeBinding], Field(discriminator="is_")
+    Union[QueueBinding, ExchangeBinding],
+    Field(discriminator="is_"),
 ]
 
 

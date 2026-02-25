@@ -7,7 +7,13 @@ from pydantic import BaseModel as PydanticBaseModel
 T = TypeVar("T")
 
 SimpleTypes = Literal[
-    "array", "boolean", "integer", "null", "number", "object", "string"
+    "array",
+    "boolean",
+    "integer",
+    "null",
+    "number",
+    "object",
+    "string",
 ]
 
 NonEmptyList = Annotated[list[T], annotated_types.MinLen(1)]

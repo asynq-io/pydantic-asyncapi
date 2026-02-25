@@ -1,13 +1,9 @@
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
 [project]
 name = "pydantic-asyncapi"
-dynamic = ["version"]
+version = "0.3.0"
 description = 'Pydantic models of AsyncAPI schema'
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.9,<4.0"
 license = "Apache-2.0"
 keywords = ["pydantic", "asyncapi", "schema"]
 authors = [{ name = "RaRhAeu", email = "rarha_eu@protonmail.com" }]
@@ -33,26 +29,23 @@ Documentation = "https://github.com/asynq-io/pydantic-asyncapi#readme"
 Issues = "https://github.com/asynq-io/pydantic-asyncapi/issues"
 Source = "https://github.com/asynq-io/pydantic-asyncapi"
 
-[tool.hatch.version]
-path = "pydantic_asyncapi/__about__.py"
+[build-system]
+requires = ["uv_build>=0.10.6,<0.11.0"]
+build-backend = "uv_build"
 
-[tool.hatch.envs.default]
-dependencies = [
+[tool.uv.build-backend]
+module-name = "pydantic_asyncapi"
+module-root = ""
+
+[dependency-groups]
+dev = [
     "pytest",
     "pyyaml",
     "pytest-cov",
     "ruff",
-    "mypy>=1.0.0",
+    "mypy",
     "bandit",
-]
-
-[tool.hatch.envs.default.scripts]
-test = "pytest --cov=./pydantic_asyncapi {args:tests}"
-check = [
-    "ruff check ./pydantic_asyncapi",
-    "ruff format --check ./pydantic_asyncapi",
-    "mypy --install-types --non-interactive {args:pydantic_asyncapi tests}",
-    "bandit -r ./pydantic_asyncapi",
+    "types-pyyaml",
 ]
 
 [tool.coverage.run]
@@ -69,8 +62,8 @@ tests = ["tests"]
 exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
 
 [tool.pyright]
-venvPath = ".venv"
-venv = "pydantic-asyncapi"
+venvPath = ""
+venv = ".venv"
 
 [tool.mypy]
 python_version = "3.9"
@@ -91,20 +84,46 @@ line-length = 88
 indent-width = 4
 
 [tool.ruff.lint]
-select = [
-    "E",   # pycodestyle errors
-    "W",   # pycodestyle warnings
-    "F",   # pyflakes
-    "I",   # isort
-    "C",   # flake8-comprehensions
-    "B",   # flake8-bugbear
-    "UP",  # pyupgrade
-    "SIM", # flake8-simplify
-]
+select = ["ALL"]
+
 ignore = [
-    "B008", # do not perform function calls in argument defaults
-    "E501", # line too long
+    "A001",
+    "A002",
+    "ARG002",
+    "ARG004",
+    "ASYNC109",
+    "ANN401",
+    "B008",     # do not perform function calls in argument defaults
+    "BLE001",
+    "COM812",
+    "D",
+    "E501",     # line too long
+    "EM101",
+    "FA100",
+    "FBT001",
+    "FBT002",
+    "FBT003",
+    "FIX002",
+    "ISC001",
+    "N815",
+    "N818",
+    "PD011",
+    "PLC0415",
+    "PLR0913",
+    "PLR2004",
+    "PLW2901",
+    "PTH123",
+    "RUF012",
+    "S108",
+    "TD002",
+    "TD003",
+    "TRY003",
+    "TRY300",
 ]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101", "ANN001", "ANN002", "ANN003", "ANN201", "ANN202"]
+
 
 [tool.bandit]
 skips = ['B101']
