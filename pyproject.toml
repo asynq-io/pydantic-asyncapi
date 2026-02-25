@@ -40,19 +40,24 @@ module-root = ""
 [dependency-groups]
 dev = [
     "pytest",
-    "pyyaml",
     "pytest-cov",
+    "pytest-sugar",
+    "pytest-repeat",
+    "pyyaml",
     "ruff",
     "mypy",
     "bandit",
     "types-pyyaml",
 ]
 
+[tool.pytest.ini_options]
+addopts = "--cov=./pydantic_asyncapi --count=3"
+testpaths = ["./tests"]
+
 [tool.coverage.run]
 source_pkgs = ["pydantic_asyncapi", "tests"]
 branch = true
 parallel = true
-omit = ["pydantic_asyncapi/__about__.py"]
 
 [tool.coverage.paths]
 pydantic_asyncapi = ["pydantic_asyncapi"]
