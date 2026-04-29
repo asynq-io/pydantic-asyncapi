@@ -125,7 +125,7 @@ class Info(ExtendableBaseModel):
 
 
 class AsyncAPI(ExtendableBaseModel):
-    asyncapi: Literal["3.0.0", "3.1.0"] = "3.0.0"
+    asyncapi: Literal["3.0.0", "3.1.0"] = "3.1.0"
     id: Optional[str] = None
     info: Info
     servers: TypeRefMap[Server] = None

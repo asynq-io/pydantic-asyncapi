@@ -17,5 +17,5 @@ class AnypointMQChannelBinding(BaseModel):
 
 
 class AnypointMQMessageBinding(BaseModel):
-    headers: Optional[TypeOrRef[Schema]] = None
+    headers: TypeOrRef[Schema] = None
     bindingVersion: str = "0.1.0"
