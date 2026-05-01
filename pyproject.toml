@@ -1,6 +1,6 @@
 [project]
 name = "pydantic-asyncapi"
-version = "0.3.1"
+version = "0.3.2"
 description = 'Pydantic models of AsyncAPI schema'
 readme = "README.md"
 requires-python = ">=3.9,<4.0"

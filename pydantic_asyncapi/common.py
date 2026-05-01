@@ -9,6 +9,10 @@ from .bindings.googlepubsub import (
     GooglePubSubChannelBinding,
     GooglePubSubMessageBinding,
 )
+from .bindings.http import (
+    HTTPMessageBinding,
+    HTTPOperationBinding,
+)
 from .bindings.ibmmq import (
     IBMMQChannelBinding,
     IBMMQOperationBinding,
@@ -171,7 +175,7 @@ class OperationBindings(ExtendableBaseModel):
     amqp1: None = None
     anypointmq: None = None
     googlepubsub: None = None
-    http: None = None
+    http: TypeOrRef[HTTPOperationBinding] = None
     ibmmq: TypeOrRef[IBMMQOperationBinding] = None
     kafka: TypeOrRef[KafkaOperationBinding] = None
     mqtt: TypeOrRef[MQTTOperationBinding] = None
@@ -186,13 +190,13 @@ class OperationBindings(ExtendableBaseModel):
 
 
 class MessageBindings(ExtendableBaseModel):
-    amqp: Optional[TypeOrRef[AMQPMessageBinding]] = None
+    amqp: TypeOrRef[AMQPMessageBinding] = None
     amqp1: None = None
-    anypointmq: Optional[TypeOrRef[AnypointMQMessageBinding]] = None
-    googlepubsub: Optional[TypeOrRef[GooglePubSubMessageBinding]] = None
-    http: None = None
+    anypointmq: TypeOrRef[AnypointMQMessageBinding] = None
+    googlepubsub: TypeOrRef[GooglePubSubMessageBinding] = None
+    http: TypeOrRef[HTTPMessageBinding] = None
     kafka: None = None
-    mqtt: Optional[TypeOrRef[MQTTMessageBinding]] = None
+    mqtt: TypeOrRef[MQTTMessageBinding] = None
     nats: None = None
     pulsar: None = None
     sns: None = None

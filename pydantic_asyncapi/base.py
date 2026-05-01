@@ -43,7 +43,7 @@ class Reference(BaseModel):
 
 
 TypeRefMap = Annotated[Optional[dict[str, Union[T, Reference]]], ...]
-TypeOrRef = Annotated[Optional[Union[T, Reference]], ...]
+TypeOrRef = Annotated[Union[T, Reference, None], ...]
 
 
 class Schema(BaseModel):

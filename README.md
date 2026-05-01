@@ -2,7 +2,7 @@
 ![Build](https://github.com/asynq-io/pydantic-asyncapi/workflows/Publish/badge.svg)
 ![License](https://img.shields.io/github/license/asynq-io/pydantic-asyncapi)
 ![Mypy](https://img.shields.io/badge/mypy-checked-blue)
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v1.json)](https://github.com/charliermarsh/ruff)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json)](https://github.com/charliermarsh/ruff)
 [![Pydantic v2](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/pydantic/pydantic/main/docs/badge/v2.json)](https://docs.pydantic.dev/latest/contributing/#badges)
 [![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
 ![Python](https://img.shields.io/pypi/pyversions/pydantic-asyncapi)
